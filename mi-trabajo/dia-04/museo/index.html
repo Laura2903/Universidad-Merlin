@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101a29">
+<title>Museo | Inventos y soluciones</title>
+<style>
+:root{--night:#0b1320;--navy:#101d2d;--gold:#d9b56d;--goldlight:#f2d99e;--cream:#f6f0e4;--muted:#c5cbd2;--line:rgba(217,181,109,.36)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--cream);background:radial-gradient(ellipse at 12% 22%,rgba(83,103,125,.2),transparent 36%),radial-gradient(ellipse at 85% 40%,rgba(125,84,35,.15),transparent 32%),var(--night);font-family:Georgia,"Times New Roman",serif;line-height:1.55}
+a{color:inherit;text-decoration:none}button{font:inherit}
+.topbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:15px clamp(18px,5vw,72px);background:rgba(9,16,27,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:13px}.brand-mark{color:var(--goldlight);font-size:31px;line-height:1}.brand-title{font:600 15px/1.2 Arial,sans-serif;letter-spacing:.2em}.brand-sub{display:block;margin-top:5px;color:#c9c5bd;font:10px Arial,sans-serif;letter-spacing:.15em}
+nav{display:flex;gap:clamp(12px,2.5vw,34px);font:13px Arial,sans-serif;color:#e0e1e4}nav a{padding:8px 0;transition:color .2s}nav a:hover,nav a:focus-visible{color:var(--goldlight)}
+.hero{max-width:1450px;margin:auto;padding:clamp(42px,7vw,90px) clamp(18px,5vw,72px) 34px}.hero-grid{display:grid;grid-template-columns:minmax(230px,.8fr) minmax(0,1.7fr);gap:clamp(30px,5vw,76px);align-items:center}
+.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:.24em;font:11px Arial,sans-serif}h1{font-size:clamp(34px,4vw,56px);line-height:1.08;margin:15px 0 18px;font-weight:500}.intro{max-width:420px;color:#d9dce1;font:16px/1.8 Arial,sans-serif}
+.guide-note{margin-top:26px;padding:17px 18px;border-left:2px solid var(--gold);background:rgba(255,255,255,.035);color:#e6dfd2;font-size:15px}.guide-note strong{color:var(--goldlight)}
+.showcase-heading{text-align:center;margin-bottom:25px}.showcase-heading h2{font-size:clamp(27px,3vw,39px);font-weight:500;margin:10px 0 5px}.showcase-heading p{margin:0;color:var(--muted);font:14px/1.7 Arial,sans-serif}
+.exhibits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.exhibit{position:relative;overflow:hidden;min-height:400px;display:flex;flex-direction:column;background:linear-gradient(160deg,rgba(245,211,145,.08),transparent 38%),#111c2a;border:1px solid rgba(217,181,109,.55);border-radius:5px;box-shadow:0 18px 36px rgba(0,0,0,.25);transition:transform .28s,border-color .28s,box-shadow .28s}
+.exhibit:hover{transform:translateY(-6px);border-color:var(--goldlight);box-shadow:0 22px 45px rgba(0,0,0,.4)}.artifact{min-height:150px;display:grid;place-items:center;position:relative;background:radial-gradient(ellipse at 50% 28%,rgba(239,190,100,.26),transparent 52%),linear-gradient(180deg,#1b2634,#0c1420);border-bottom:1px solid var(--line)}.artifact:before{content:"";position:absolute;top:0;width:54px;height:2px;background:var(--goldlight);box-shadow:0 0 22px 5px rgba(242,217,158,.35)}.artifact-icon{font-size:66px;filter:drop-shadow(0 5px 15px rgba(217,181,109,.25))}.artifact-number{position:absolute;left:15px;top:13px;color:rgba(242,217,158,.8);font:10px Arial,sans-serif;letter-spacing:.2em}
+.plaque{flex:1;margin:13px;padding:18px 16px;color:#1d1a14;background:linear-gradient(135deg,#f1d99e,#cba25a);border:1px solid #f7e8bf;box-shadow:inset 0 0 0 3px rgba(88,54,14,.13)}.plaque h3{margin:0 0 11px;font-size:21px;line-height:1.2;text-align:center}.field{margin:8px 0;font:12px/1.5 Arial,sans-serif}.field b{display:block;margin-bottom:1px}.placeholder{color:#5b4829;font-style:italic}
+.hint{margin:15px 0 0;color:#e2d8c5;font:12px/1.6 Arial,sans-serif;text-align:center}.lower{max-width:1450px;margin:auto;padding:24px clamp(18px,5vw,72px) 72px}.bottom-callout{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 25px;border:1px solid var(--line);background:rgba(255,255,255,.035)}.bottom-callout h2{margin:0 0 5px;color:var(--goldlight);font-size:22px;font-weight:500}.bottom-callout p{margin:0;color:var(--muted);font:13px/1.7 Arial,sans-serif}
+.pill{flex:0 0 auto;border:1px solid var(--gold);border-radius:999px;padding:11px 17px;color:var(--goldlight);background:transparent;cursor:pointer;font:13px Arial,sans-serif;transition:background .2s,color .2s}.pill:hover,.pill:focus-visible{background:var(--gold);color:var(--night)}.footer{padding:22px;text-align:center;color:#929ba6;border-top:1px solid rgba(217,181,109,.2);font:11px Arial,sans-serif;letter-spacing:.06em}
+.chat-panel{margin-top:24px;padding:22px;border:1px solid var(--line);background:#111c2a}.chat-panel[hidden]{display:none}.chat-panel h2{margin:0 0 6px;color:var(--goldlight);font-size:22px;font-weight:500}.chat-panel>p{margin:0 0 16px;color:var(--muted);font:13px/1.7 Arial,sans-serif}.chat-messages{display:grid;gap:10px;max-height:320px;overflow:auto;margin-bottom:14px}.chat-message{max-width:85%;margin:0;padding:11px 14px;color:var(--cream);background:rgba(255,255,255,.06);font:14px/1.6 Arial,sans-serif;white-space:pre-wrap}.chat-message.user{justify-self:end;border:1px solid var(--line)}.chat-message.guide{border-left:2px solid var(--gold)}.chat-form{display:flex;gap:10px;align-items:flex-end}.chat-form textarea{flex:1;min-height:48px;max-height:140px;padding:12px;color:var(--cream);background:#0b1320;border:1px solid var(--line);font:14px/1.5 Arial,sans-serif;resize:vertical}.chat-form textarea:focus{outline:2px solid var(--gold)}.chat-form button:disabled{opacity:.6;cursor:wait}
+.fade-up{animation:rise .7s ease both}.exhibit:nth-child(2){animation-delay:.12s}@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media(max-width:950px){.hero-grid{grid-template-columns:1fr}.intro{max-width:700px}.exhibits{gap:12px}.plaque{margin:8px;padding:14px 12px}.plaque h3{font-size:18px}}
+@media(max-width:650px){.topbar{align-items:flex-start;flex-direction:column;padding:14px 18px}nav{width:100%;justify-content:space-between;gap:8px;font-size:12px}.brand-title{font-size:13px}.brand-sub{font-size:9px}.hero{padding-top:38px}.exhibits{grid-template-columns:1fr;max-width:440px;margin:auto}.exhibit{min-height:auto}.artifact{min-height:135px}.plaque{margin:12px;padding:17px}.bottom-callout{align-items:flex-start;flex-direction:column}.pill{white-space:normal}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a class="brand" href="#inicio" aria-label="Inicio del museo"><span class="brand-mark" aria-hidden="true">▤</span><span><span class="brand-title">MUSEO</span><span class="brand-sub">INVENTOS Y SOLUCIONES</span></span></a>
+<nav aria-label="Navegación principal"><a href="#inicio">Inicio</a><a href="#exhibiciones">Exhibiciones</a><a href="#guia">Guía</a></nav>
+</header>
+<main>
+<section class="hero" id="inicio"><div class="hero-grid">
+<div class="welcome fade-up" id="guia"><div class="eyebrow">Una aventura para descubrir</div><h1>Hola y bienvenidos,<br>visitantes.</h1><p class="intro">Soy <strong>tu guía del museo</strong> y es un gusto acompañarte el día de hoy. Conozcamos dos inventos y los problemas que ayudan a resolver.</p><div class="guide-note"><strong>¿Comenzamos?</strong><br>Recorre las placas o pregúntame sobre los inventos. Si falta un dato, te lo diré sin inventarlo.</div></div>
+<div class="gallery" id="exhibiciones"><div class="showcase-heading"><div class="eyebrow">Nuestras exhibiciones</div><h2>Dos inventos, dos soluciones</h2><p>Explora cada placa y descubre qué problema intenta resolver cada invento.</p></div>
+<div class="exhibits">
+<article class="exhibit fade-up" data-id="inv-1"><div class="artifact"><span class="artifact-number">EXHIBICIÓN 01</span><span class="artifact-icon" aria-hidden="true">✧</span></div><div class="plaque"><h3 data-field="invento">Solución para detectar disminuciones de existencias y anticipar faltantes</h3><div class="field"><b>Autoría:</b><span class="placeholder" data-field="autor">Compañera de Planeación de Suministro</span></div><div class="field"><b>Problema que resuelve:</b><span class="placeholder" data-field="problema">La planificación de compras requiere hasta seis meses de anticipación; detectar tarde una disminución de existencias deja menos margen para evitar faltantes.</span></div><div class="field"><b>Sin la solución:</b><span class="placeholder" data-field="sin_el">La disminución de existencias podría detectarse tarde y habría menos margen para anticipar compras y evitar faltantes.</span></div><div class="field"><b>Valor estimado:</b><span class="placeholder" data-field="valor_estimado">Desconocido</span></div><div class="field"><b>Área que lo utiliza:</b><span class="placeholder" data-field="quien_lo_usa">Planeación de Suministro</span></div></div></article>
+<article class="exhibit fade-up" data-id="inv-2"><div class="artifact"><span class="artifact-number">EXHIBICIÓN 02</span><span class="artifact-icon" aria-hidden="true">⌘</span></div><div class="plaque"><h3 data-field="invento">Solución para validar cuentas de gastos y facturas, detectar inconsistencias y reducir errores</h3><div class="field"><b>Autoría:</b><span class="placeholder" data-field="autor">Analista de Cuentas por Pagar</span></div><div class="field"><b>Problema que resuelve:</b><span class="placeholder" data-field="problema">Validar que las facturas coincidan con los gastos, detectar inconsistencias y reducir errores en la revisión de comprobantes.</span></div><div class="field"><b>Sin la solución:</b><span class="placeholder" data-field="sin_el">La validación sería más manual, con mayor riesgo de errores e inconsistencias y de que la gerencia rechazara la revisión.</span></div><div class="field"><b>Valor estimado:</b><span class="placeholder" data-field="valor_estimado">Desconocido</span></div><div class="field"><b>Área que lo utiliza:</b><span class="placeholder" data-field="quien_lo_usa">Analista de Cuentas por Pagar</span></div></div></article>
+</div><p class="hint">Psst… cada gran invento empezó con alguien que se hizo una pregunta.</p></div>
+</div></section>
+<section class="lower"><div class="bottom-callout"><div><h2>¡La curiosidad también se vive!</h2><p>Pregunta por los inventos y sus usos. Si falta un dato, el guía lo reconocerá.</p></div><button class="pill" id="askButton" type="button" aria-expanded="false" aria-controls="chatPanel">Preguntarle al guía ↗</button></div><div class="chat-panel" id="chatPanel" hidden><h2>Conversa con el guía</h2><p>Pregunta sobre los inventos de la galería. El guía usa la información disponible en sus fichas.</p><div class="chat-messages" id="chatMessages" role="log" aria-live="polite"><p class="chat-message guide">Hola y bienvenidos, visitantes. ¿Qué invento les gustaría conocer?</p></div><form class="chat-form" id="chatForm"><textarea id="questionInput" name="pregunta" maxlength="500" rows="2" placeholder="Escribe tu pregunta (máximo 500 caracteres)" required aria-label="Pregunta para el guía"></textarea><button class="pill" id="sendButton" type="submit">Enviar</button></form></div></section>
+</main>
+<footer class="footer">MUSEO DE LOS INVENTOS · APRENDE, EXPLORA Y PREGUNTA</footer>
+<script>
+const askButton=document.getElementById('askButton');
+const chatPanel=document.getElementById('chatPanel');
+const chatMessages=document.getElementById('chatMessages');
+const chatForm=document.getElementById('chatForm');
+const questionInput=document.getElementById('questionInput');
+const sendButton=document.getElementById('sendButton');
+const history=[];
+
+function addMessage(role,text){
+  const message=document.createElement('p');
+  message.className='chat-message '+role;
+  message.textContent=text;
+  chatMessages.append(message);
+  chatMessages.scrollTop=chatMessages.scrollHeight;
+}
+
+askButton.addEventListener('click',function(){
+  chatPanel.hidden=!chatPanel.hidden;
+  askButton.setAttribute('aria-expanded',String(!chatPanel.hidden));
+  if(!chatPanel.hidden){chatPanel.scrollIntoView({behavior:'smooth',block:'nearest'});questionInput.focus();}
+});
+
+async function cargarFichas(){
+  try{
+    const response=await fetch('/api/fichas');
+    if(!response.ok){throw new Error('No se pudieron cargar las fichas.');}
+    const fichas=await response.json();
+    document.querySelectorAll('.exhibit[data-id]').forEach(function(placa){
+      const ficha=fichas.find(function(item){return item.id===placa.dataset.id;});
+      if(!ficha){return;}
+      placa.querySelector('[data-field="invento"]').textContent=ficha.invento;
+      placa.querySelector('[data-field="autor"]').textContent=ficha.autor;
+      placa.querySelector('[data-field="problema"]').textContent=ficha.problema;
+      placa.querySelector('[data-field="sin_el"]').textContent=ficha.sin_el;
+      placa.querySelector('[data-field="valor_estimado"]').textContent=ficha.valor_estimado;
+      placa.querySelector('[data-field="quien_lo_usa"]').textContent=ficha.quien_lo_usa;
+    });
+  }catch(error){
+    if(location.protocol!=='file:'){addMessage('guide','No pude cargar las fichas de la galería. Recarga la página para intentarlo otra vez.');}
+  }
+}
+
+chatForm.addEventListener('submit',async function(event){
+  event.preventDefault();
+  const question=questionInput.value.trim();
+  if(!question){return;}
+  if(location.protocol==='file:'){
+    addMessage('guide','Abre tu museo desde localhost para hablar con el guía.');
+    return;
+  }
+  addMessage('user',question);
+  questionInput.value='';
+  sendButton.disabled=true;
+  sendButton.textContent='Consultando…';
+  try{
+    const response=await fetch('/api/preguntar',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({pregunta:question,historial:history.slice(-10)})
+    });
+    if(!response.ok){throw new Error('No pude enviar la pregunta.');}
+    const data=await response.json();
+    addMessage('guide',data.respuesta);
+    history.push({role:'user',content:question},{role:'assistant',content:data.respuesta});
+    history.splice(0,Math.max(0,history.length-10));
+  }catch(error){
+    addMessage('guide','No pude conectar con el guía en este momento. Inténtalo de nuevo más tarde.');
+  }finally{
+    sendButton.disabled=false;
+    sendButton.textContent='Enviar';
+    questionInput.focus();
+  }
+});
+
+cargarFichas();
+</script>
+</body></html>

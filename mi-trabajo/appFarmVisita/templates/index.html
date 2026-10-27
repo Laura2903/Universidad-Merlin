@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#174f3b">
+  <meta name="description" content="Registro local de farmacias, visitas, pedidos e inventario.">
+  <title>FarmaVisita</title>
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/db.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/sync.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="FarmaVisita, inicio">
+      <span class="brand-mark" aria-hidden="true">F</span>
+      <span>FarmaVisita<small>Gestión de campo</small></span>
+    </a>
+    <div class="connection">
+      <span id="connection-dot" class="connection-dot"></span>
+      <span id="connection-label">Comprobando conexión...</span>
+      <span id="pending-count" class="pending-count">0 pendientes</span>
+      <button id="sync-button" class="button button-outline" type="button">Sincronizar ahora</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar" aria-label="Navegación principal">
+      <p class="side-label">MENÚ</p>
+      <nav id="navigation">
+        <button class="nav-item active" data-view="inicio" type="button">▦ <span>Inicio</span></button>
+        <button class="nav-item" data-view="farmacias" type="button">⌂ <span>Farmacias</span></button>
+        <button class="nav-item" data-view="visitas" type="button">◷ <span>Visitas</span></button>
+        <button class="nav-item" data-view="productos" type="button">◇ <span>Productos</span></button>
+        <button class="nav-item" data-view="pedidos" type="button">▤ <span>Pedidos</span></button>
+        <button class="nav-item" data-view="inventario" type="button">▧ <span>Inventario</span></button>
+        <button class="nav-item" data-view="reportes" type="button">▥ <span>Reportes</span></button>
+      </nav>
+      <p class="side-note">Los datos creados sin conexión se guardan en este dispositivo hasta que se sincronicen.</p>
+    </aside>
+
+    <section class="workspace">
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+      <div id="view-root"></div>
+    </section>
+  </main>
+  <footer class="footer">FarmaVisita · Los pedidos registrados no representan ventas cobradas o entregadas.</footer>
+</body>
+</html>

@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stanley Quencher: cómo se volvió viral</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Courier New", Courier, monospace;
+      color: #192b43;
+      background: #d9d0bd;
+      --paper: #f1e8d6;
+      --ink: #192b43;
+      --blue: #294c70;
+      --wine: #71384b;
+      --purple: #59466f;
+      --muted: #635d58;
+    }
+    * { box-sizing: border-box; }
+    body {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 28px 20px 56px;
+      background:
+        repeating-linear-gradient(0deg, transparent 0 5px, rgb(80 61 45 / 3%) 5px 6px),
+        var(--paper);
+      box-shadow: 0 0 34px rgb(34 35 43 / 18%);
+      min-height: 100vh;
+    }
+    header {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(28px, 7vw, 68px);
+      border: 1px solid #a79578;
+      color: var(--paper);
+      background:
+        repeating-linear-gradient(135deg, transparent 0 14px, rgb(255 255 255 / 3%) 14px 15px),
+        linear-gradient(125deg, #172941, #294c70 58%, #493b5b);
+      box-shadow: 5px 6px 0 rgb(25 43 67 / 15%);
+    }
+    header::after {
+      content: "CASO 03";
+      position: absolute;
+      right: 24px;
+      top: 24px;
+      padding: 9px 12px;
+      border: 2px solid #d9a6ad;
+      color: #e5bcc0;
+      font-size: .82rem;
+      letter-spacing: .12em;
+      transform: rotate(7deg);
+    }
+    .expediente {
+      margin: 0 0 18px;
+      color: #d9b9a2;
+      font-size: .84rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    header p {
+      max-width: 650px;
+      margin: 18px 0 0;
+      color: #e8e0d3;
+      line-height: 1.7;
+    }
+    h1 {
+      max-width: 780px;
+      margin: 0;
+      font-size: clamp(2rem, 6vw, 4rem);
+      line-height: 1.08;
+      text-shadow: 2px 2px 0 rgb(0 0 0 / 20%);
+    }
+    h2 {
+      margin: 42px 0 26px;
+      color: var(--wine);
+      font-size: clamp(1.2rem, 3vw, 1.7rem);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    h2::before { content: "// "; color: var(--purple); }
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 24px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: clue;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      bottom: 5px;
+      left: 20px;
+      width: 5px;
+      border-radius: 99px;
+      background:
+        repeating-linear-gradient(180deg, #9f252d 0 12px, #d06a56 12px 15px, #7d1f2c 15px 20px);
+      box-shadow: 1px 0 0 #f3d3bd, 3px 0 0 rgb(91 31 40 / 30%);
+    }
+    .timeline li {
+      position: relative;
+      margin-left: 64px;
+      min-width: 0;
+      counter-increment: clue;
+    }
+    .timeline li::before {
+      content: counter(clue, decimal-leading-zero);
+      position: absolute;
+      top: 34px;
+      left: -64px;
+      display: grid;
+      width: 43px;
+      height: 43px;
+      place-items: center;
+      border: 3px solid var(--paper);
+      border-radius: 50%;
+      color: #fff;
+      background: #9f252d;
+      box-shadow: 0 0 0 2px #9f252d, 0 0 0 5px var(--paper);
+      font-size: .82rem;
+      font-weight: 700;
+      z-index: 2;
+    }
+    .timeline li::after {
+      content: "";
+      position: absolute;
+      top: 54px;
+      left: -41px;
+      width: 42px;
+      border-top: 3px solid #a52a31;
+      box-shadow: 0 1px 0 #e1a28a;
+    }
+    .card-shell {
+      display: grid;
+      perspective: 1200px;
+    }
+    .card-inner {
+      display: grid;
+      grid-template-areas: "face";
+      transform-style: preserve-3d;
+      transition: transform .72s cubic-bezier(.2, .75, .25, 1);
+    }
+    .timeline li.is-flipped .card-inner { transform: rotateY(180deg); }
+    .card-face {
+      grid-area: face;
+      min-width: 0;
+      padding: 22px 24px;
+      border: 1px solid #b6a68e;
+      background:
+        repeating-linear-gradient(0deg, transparent 0 6px, rgb(60 48 37 / 2%) 6px 7px),
+        #f8f1e5;
+      box-shadow: 3px 4px 0 rgb(67 58 54 / 12%);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      visibility: hidden;
+      transition: visibility 0s linear .36s;
+    }
+    .timeline li:not(.is-flipped) .card-front,
+    .timeline li.is-flipped .card-back {
+      visibility: visible;
+      transition-delay: 0s;
+    }
+    .card-front { border-left: 5px solid var(--blue); }
+    .timeline li:nth-child(3n + 2) .card-front { border-left-color: var(--wine); }
+    .timeline li:nth-child(3n) .card-front { border-left-color: var(--purple); }
+    .card-back {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 5px solid var(--wine);
+      background:
+        repeating-linear-gradient(0deg, transparent 0 6px, rgb(60 48 37 / 2%) 6px 7px),
+        #eee2d1;
+      transform: rotateY(180deg);
+    }
+    .card-back h3 {
+      margin: 0 0 12px;
+      color: var(--wine);
+      font-size: 1.05rem;
+    }
+    .card-back p { line-height: 1.7; }
+    .card-back a { margin-top: 4px; }
+    .flip-button {
+      align-self: flex-start;
+      margin-top: 12px;
+      padding: 8px 11px;
+      border: 1px dashed var(--wine);
+      color: var(--wine);
+      background: #f4e8dc;
+      font: inherit;
+      font-size: .82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .flip-button:hover, .flip-button:focus-visible {
+      color: #fff;
+      background: var(--wine);
+    }
+    .timeline li.reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .75s ease, transform .75s cubic-bezier(.2, .7, .2, 1);
+    }
+    .timeline li.reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    time {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--wine);
+      font-weight: 700;
+      line-height: 1.5;
+    }
+    .timeline li p { margin: 10px 0; line-height: 1.65; }
+    a {
+      display: inline-block;
+      color: var(--blue);
+      font-weight: 700;
+      line-height: 1.6;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+    a:hover, a:focus-visible { color: var(--wine); }
+    .estado {
+      display: inline-block;
+      margin-top: 8px !important;
+      padding: 5px 9px;
+      border: 1px dashed #49664f;
+      color: #31563a;
+      background: #e7e6d6;
+      font-weight: 700;
+    }
+    .prueba {
+      padding-left: 12px;
+      border-left: 2px solid #b69a7e;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .nota {
+      margin-top: 34px;
+      padding: 18px 20px;
+      border: 1px dashed var(--wine);
+      color: #493744;
+      background: #eadedb;
+      line-height: 1.7;
+    }
+    .accuse-button {
+      display: block;
+      margin: 0 auto 26px;
+      padding: 13px 24px;
+      border: 2px solid #8e202a;
+      color: #fff8ed;
+      background: #8e202a;
+      box-shadow: 4px 5px 0 rgb(76 31 40 / 22%);
+      font: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .accuse-button:hover, .accuse-button:focus-visible {
+      transform: translateY(-2px);
+      background: #6f1d2c;
+      box-shadow: 5px 7px 0 rgb(76 31 40 / 28%);
+    }
+    .verdict-scrim[hidden], .verdict-dialog[hidden] { display: none; }
+    .verdict-scrim {
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      background: rgb(9 13 25 / 86%);
+      animation: darken .35s ease both;
+    }
+    .timeline li.verdict-key {
+      z-index: 1001;
+      filter: brightness(1.08);
+      box-shadow: 0 0 0 3px #d94a45, 0 0 24px 8px rgb(255 64 54 / 70%);
+      animation: key-clue-pulse 1.2s ease-in-out infinite alternate;
+    }
+    .verdict-dialog {
+      position: fixed;
+      z-index: 1002;
+      top: 50%;
+      left: 50%;
+      width: min(680px, calc(100vw - 32px));
+      max-height: min(84vh, 760px);
+      overflow: auto;
+      padding: clamp(24px, 6vw, 48px);
+      border: 2px solid #b89b77;
+      color: var(--ink);
+      background:
+        repeating-linear-gradient(0deg, transparent 0 6px, rgb(60 48 37 / 2%) 6px 7px),
+        #f8f1e5;
+      box-shadow: 10px 12px 0 rgb(0 0 0 / 35%);
+      transform: translate(-50%, -50%);
+      animation: verdict-arrive .45s cubic-bezier(.2, .75, .25, 1) both;
+    }
+    .verdict-kicker {
+      margin: 0 0 18px;
+      color: var(--purple);
+      font-size: .82rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .verdict-dialog h2 {
+      margin: 0 0 18px;
+      color: var(--wine);
+      font-size: clamp(1.35rem, 4vw, 2rem);
+    }
+    .verdict-dialog h2::before { content: ""; }
+    .typed-verdict {
+      min-height: 8em;
+      margin: 0;
+      font-size: clamp(1rem, 2.8vw, 1.2rem);
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+    .typed-verdict::after {
+      content: "▋";
+      margin-left: 3px;
+      color: var(--wine);
+      animation: caret-blink .8s steps(2, start) infinite;
+    }
+    .typed-verdict.done::after { content: ""; animation: none; }
+    .case-seal {
+      width: fit-content;
+      margin: 24px 0 26px auto;
+      padding: 10px 14px;
+      border: 4px double #a4202c;
+      color: #a4202c;
+      font-size: clamp(1rem, 4vw, 1.5rem);
+      font-weight: 900;
+      letter-spacing: .08em;
+      transform: rotate(-8deg) scale(.55);
+      opacity: 0;
+      text-shadow: 1px 0 #a4202c;
+    }
+    .case-seal.is-stamped {
+      animation: stamp-in .42s cubic-bezier(.15, .8, .25, 1.5) forwards;
+    }
+    .close-verdict {
+      display: block;
+      margin-left: auto;
+      padding: 10px 16px;
+      border: 1px solid var(--blue);
+      color: #fff8ed;
+      background: var(--blue);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .close-verdict:hover, .close-verdict:focus-visible { background: var(--wine); }
+    @keyframes darken {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes verdict-arrive {
+      from { opacity: 0; transform: translate(-50%, -46%) scale(.96); }
+      to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+    @keyframes key-clue-pulse {
+      from { box-shadow: 0 0 0 2px #d94a45, 0 0 12px 3px rgb(255 64 54 / 48%); }
+      to { box-shadow: 0 0 0 4px #ef655b, 0 0 28px 10px rgb(255 64 54 / 82%); }
+    }
+    @keyframes caret-blink {
+      to { visibility: hidden; }
+    }
+    @keyframes stamp-in {
+      0% { opacity: 0; transform: rotate(-8deg) scale(1.8); }
+      70% { opacity: 1; transform: rotate(-8deg) scale(.92); }
+      100% { opacity: 1; transform: rotate(-8deg) scale(1); }
+    }
+    footer {
+      margin-top: 30px;
+      padding-top: 14px;
+      border-top: 1px solid #b6a68e;
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.6;
+    }
+    @media (max-width: 560px) {
+      body { padding: 14px 12px 36px; }
+      header { padding: 54px 22px 28px; }
+      header::after { top: 12px; right: 14px; }
+      .timeline { gap: 18px; }
+      .timeline li {
+        margin-left: 48px;
+      }
+      .timeline::before { left: 14px; }
+      .timeline li::before {
+        left: -48px;
+        width: 35px;
+        height: 35px;
+        top: 30px;
+        font-size: .72rem;
+      }
+      .timeline li::after {
+        top: 47px;
+        left: -34px;
+        width: 35px;
+      }
+      .card-face { padding: 18px 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="expediente">Expediente de investigación · Detective de mercado</p>
+    <h1>Stanley Quencher: cómo se volvió viral</h1>
+    <p>El caso: seguir las pistas que llevaron al Quencher de producto poco prioritario a fenómeno viral. Cada hito conserva su fuente y su comprobación.</p>
+  </header>
+
+  <main>
+    <h2>Línea del tiempo · pistas verificadas</h2>
+    <button class="accuse-button" id="accuse-button" type="button">Acusar</button>
+    <ol class="timeline">
+      <li class="reveal">
+        <div class="card-shell">
+          <div class="card-inner">
+            <section class="card-face card-front">
+              <time datetime="2016">2016 · Se presenta el Quencher</time>
+              <p>Stanley introduce el vaso Quencher, que después se convertiría en el producto viral.</p>
+              <a href="https://www.retaildive.com/news/stanley-quencher-tumblers-viral-success/699416/" target="_blank" rel="noopener noreferrer">Fuente: Retail Dive, “The rise of the Stanley tumbler”</a>
+              <p class="prueba">Comprobación: el artículo dice que el Quencher fue introducido en 2016.</p>
+              <p class="estado" aria-label="Pista verificada">✓ La fuente la respalda</p>
+              <button class="flip-button" type="button" aria-pressed="false">Doble clic o activar para ver el dato</button>
+            </section>
+            <section class="card-face card-back" aria-hidden="true">
+              <h3>Dato de la pista</h3>
+              <p>El Quencher nació en 2016. La fuente lo describe como un producto que tardó años en volverse viral y que no era prioridad para Stanley.</p>
+              <a href="https://www.retaildive.com/news/stanley-quencher-tumblers-viral-success/699416/" target="_blank" rel="noopener noreferrer">Comprobar en Retail Dive</a>
+              <button class="flip-button" type="button" aria-pressed="true">Volver a la pista</button>
+            </section>
+          </div>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="card-shell">
+          <div class="card-inner">
+            <section class="card-face card-front">
+              <time datetime="2017-11">Noviembre de 2017 · The Buy Guide lo recomienda</time>
+              <p>Una publicación de Instagram de The Buy Guide destacó el Quencher de 40 onzas y sus características.</p>
+              <a href="https://www.retaildive.com/news/stanley-quencher-tumblers-viral-success/699416/" target="_blank" rel="noopener noreferrer">Fuente: Retail Dive, “The rise of the Stanley tumbler”</a>
+              <p class="prueba">Comprobación: Retail Dive fecha la publicación en noviembre de 2017 y describe el Quencher de 40 onzas; también documenta su enfoque de uso diario y las ventas de los lotes de The Buy Guide.</p>
+              <p class="estado" aria-label="Pista verificada">✓ La fuente la respalda</p>
+              <button class="flip-button" type="button" aria-pressed="false">Doble clic o activar para ver el dato</button>
+            </section>
+            <section class="card-face card-back" aria-hidden="true">
+              <h3>Dato de la pista</h3>
+              <p>La recomendación de noviembre de 2017 destacó el vaso de 40 onzas, su asa, popote y capacidad para mantener fría la bebida. The Buy Guide lo presentó como artículo diario, no solo para exteriores, y propuso mostrarlo a mujeres mediante recomendaciones de mujeres.</p>
+              <p>Stanley colaboró con The Buy Guide: el primer lote de 5,000 vasos se vendió en unos cuatro días y el segundo lote de 5,000, en una hora. La fuente relaciona la colaboración con mayor recomendación de boca en boca y demanda.</p>
+              <a href="https://www.retaildive.com/news/stanley-quencher-tumblers-viral-success/699416/" target="_blank" rel="noopener noreferrer">Comprobar en Retail Dive</a>
+              <button class="flip-button" type="button" aria-pressed="true">Volver a la pista</button>
+            </section>
+          </div>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="card-shell">
+          <div class="card-inner">
+            <section class="card-face card-front">
+              <time datetime="2019">2019 · El producto no era prioritario</time>
+              <p>El vicepresidente de comercio global de Stanley dijo a Retail Dive que no había planes para descontinuarlo, pero que el vaso no era una prioridad en ese momento.</p>
+              <a href="https://www.retaildive.com/news/stanley-quencher-tumblers-viral-success/699416/" target="_blank" rel="noopener noreferrer">Fuente: Retail Dive, “The rise of the Stanley tumbler”</a>
+              <p class="prueba">Comprobación: el artículo atribuye al vicepresidente de Stanley que en 2019 el vaso no era prioritario y que no había planes de descontinuarlo.</p>
+              <p class="estado" aria-label="Pista verificada">✓ La fuente la respalda</p>
+              <button class="flip-button" type="button" aria-pressed="false">Doble clic o activar para ver el dato</button>
+            </section>
+            <section class="card-face card-back" aria-hidden="true">
+              <h3>Dato de la pista</h3>
+              <p>En 2019, el Quencher no estaba priorizado. Stanley dijo que no planeaba dejar de producirlo: el producto seguía existiendo, aunque aún no era foco del negocio.</p>
+              <a href="https://www.retaildive.com/news/stanley-quencher-tumblers-viral-success/699416/" target="_blank" rel="noopener noreferrer">Comprobar en Retail Dive</a>
+              <button class="flip-button" type="button" aria-pressed="true">Volver a la pista</button>
+            </section>
+          </div>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="card-shell">
+          <div class="card-inner">
+            <section class="card-face card-front">
+              <time datetime="2023-11-14">14 de noviembre de 2023 · Retail Dive publica las cifras de TikTok</time>
+              <p>Retail Dive reportó que los Stanley Cup acumulaban alrededor de 20 millones de vistas en TikTok. Un directivo de Stanley también habló de 700 millones de vistas del hashtag #StanleyTumbler.</p>
+              <a href="https://www.retaildive.com/news/stanley-quencher-tumblers-viral-success/699416/" target="_blank" rel="noopener noreferrer">Fuente: Retail Dive, “The rise of the Stanley tumbler”</a>
+              <p class="prueba">Comprobación: el artículo, publicado el 14 de noviembre, menciona cerca de 20 millones de vistas y cita al directivo sobre 700 millones de vistas de #StanleyTumbler.</p>
+              <p class="estado" aria-label="Pista verificada">✓ La fuente la respalda</p>
+              <button class="flip-button" type="button" aria-pressed="false">Doble clic o activar para ver el dato</button>
+            </section>
+            <section class="card-face card-back" aria-hidden="true">
+              <h3>Dato de la pista</h3>
+              <p>El artículo separa dos cifras: cerca de 20 millones de vistas de los Stanley Cup en TikTok y 700 millones de vistas de #StanleyTumbler, según un directivo de Stanley.</p>
+              <a href="https://www.retaildive.com/news/stanley-quencher-tumblers-viral-success/699416/" target="_blank" rel="noopener noreferrer">Comprobar en Retail Dive</a>
+              <button class="flip-button" type="button" aria-pressed="true">Volver a la pista</button>
+            </section>
+          </div>
+        </div>
+      </li>
+      <li class="reveal">
+        <div class="card-shell">
+          <div class="card-inner">
+            <section class="card-face card-front">
+              <time datetime="2023-11-20">20 de noviembre de 2023 · El video del auto incendiado se vuelve noticia</time>
+              <p>USA Today informó que un Quencher sobrevivió al incendio del auto de su dueña y que Stanley le ofreció un vehículo nuevo. El video se publicó el 15 de noviembre.</p>
+              <a href="https://www.usatoday.com/story/money/shopping/2023/11/20/tik-tok-car-fire-stanley-drink-cup-new-car/71660858007/" target="_blank" rel="noopener noreferrer">Fuente: USA Today, “Stanley tumbler survives car fire, leads to new car from cup maker”</a>
+              <p class="prueba">Comprobación: USA Today fecha el artículo el 20 de noviembre, dice que el video se publicó el 15 y confirma que Stanley ofreció un auto nuevo.</p>
+              <p class="estado" aria-label="Pista verificada">✓ La fuente la respalda</p>
+              <button class="flip-button" type="button" aria-pressed="false">Doble clic o activar para ver el dato</button>
+            </section>
+            <section class="card-face card-back" aria-hidden="true">
+              <h3>Dato de la pista</h3>
+              <p>El video de Danielle Lettering superaba 82 millones de vistas el lunes 20 de noviembre de 2023. El presidente de Stanley respondió ofreciéndole reemplazar su vehículo.</p>
+              <a href="https://www.usatoday.com/story/money/shopping/2023/11/20/tik-tok-car-fire-stanley-drink-cup-new-car/71660858007/" target="_blank" rel="noopener noreferrer">Comprobar en USA Today</a>
+              <button class="flip-button" type="button" aria-pressed="true">Volver a la pista</button>
+            </section>
+          </div>
+        </div>
+      </li>
+    </ol>
+
+    <p class="nota"><strong>Pista débil retirada:</strong> El dato de 1913 es un antecedente de la marca, pero no explica la viralidad del Quencher; lo quité de esta cronología. Las cinco pistas restantes están marcadas ✓ porque sus fuentes respaldan los datos indicados.</p>
+  </main>
+
+  <div class="verdict-scrim" id="verdict-scrim" hidden></div>
+  <section class="verdict-dialog" id="verdict-dialog" role="dialog" aria-modal="true" aria-labelledby="verdict-title" aria-describedby="typed-verdict" hidden>
+    <p class="verdict-kicker">Resolución del expediente</p>
+    <h2 id="verdict-title">Mi veredicto final</h2>
+    <p class="typed-verdict" id="typed-verdict"></p>
+    <p class="case-seal" id="case-seal" aria-label="Caso cerrado">CASO CERRADO</p>
+    <button class="close-verdict" id="close-verdict" type="button">Cerrar y regresar al tablero</button>
+  </section>
+
+  <footer>Las fechas, cifras y eventos de esta página se presentan como aparecen en las fuentes enlazadas.</footer>
+  <script>
+    const cards = document.querySelectorAll(".timeline li");
+    const accuseButton = document.querySelector("#accuse-button");
+    const verdictScrim = document.querySelector("#verdict-scrim");
+    const verdictDialog = document.querySelector("#verdict-dialog");
+    const verdictText = document.querySelector("#typed-verdict");
+    const caseSeal = document.querySelector("#case-seal");
+    const closeVerdictButton = document.querySelector("#close-verdict");
+    const finalVerdict = "Stanley pasó de ser una marca de termos de trabajo pesado a un accesorio viral de moda e hidratación debido a una reorientación estratégica de marketing enfocada en el público femenino e influencers.";
+    let typewriterTimer;
+
+    function setFlipped(card, flipped) {
+      card.classList.toggle("is-flipped", flipped);
+      card.querySelector(".card-front").setAttribute("aria-hidden", String(flipped));
+      card.querySelector(".card-back").setAttribute("aria-hidden", String(!flipped));
+      card.querySelectorAll(".flip-button").forEach((button) => {
+        button.setAttribute("aria-pressed", String(flipped));
+        button.tabIndex = button.closest(".card-face").getAttribute("aria-hidden") === "true" ? -1 : 0;
+        button.textContent = flipped ? "Volver a la pista" : "Doble clic o activar para ver el dato";
+      });
+    }
+
+    cards.forEach((card) => setFlipped(card, false));
+
+    cards.forEach((card) => {
+      card.querySelectorAll(".flip-button").forEach((button) => {
+        button.addEventListener("click", () => setFlipped(card, !card.classList.contains("is-flipped")));
+      });
+      card.addEventListener("dblclick", (event) => {
+        if (event.target.closest("a, button")) return;
+        setFlipped(card, !card.classList.contains("is-flipped"));
+      });
+      card.addEventListener("keydown", (event) => {
+        if (event.target.closest("a, button")) return;
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setFlipped(card, !card.classList.contains("is-flipped"));
+        }
+      });
+    });
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries, currentObserver) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            currentObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.16, rootMargin: "0px 0px -6% 0px" });
+      cards.forEach((card) => observer.observe(card));
+    }
+
+    function revealVisibleCards() {
+      cards.forEach((card) => {
+        const bounds = card.getBoundingClientRect();
+        if (bounds.top < window.innerHeight * 0.94 && bounds.bottom > 0) {
+          card.classList.add("is-visible");
+        }
+      });
+    }
+
+    window.addEventListener("scroll", () => requestAnimationFrame(revealVisibleCards), { passive: true });
+    window.addEventListener("resize", revealVisibleCards);
+    document.addEventListener("visibilitychange", revealVisibleCards);
+    revealVisibleCards();
+
+    function closeVerdict() {
+      window.clearInterval(typewriterTimer);
+      verdictDialog.hidden = true;
+      verdictScrim.hidden = true;
+      document.body.classList.remove("verdict-open");
+      cards.forEach((card) => card.classList.remove("verdict-key"));
+      caseSeal.classList.remove("is-stamped");
+      accuseButton.focus();
+    }
+
+    accuseButton.addEventListener("click", () => {
+      window.clearInterval(typewriterTimer);
+      cards.forEach((card) => card.classList.remove("verdict-key"));
+      [1, 2, 3].forEach((index) => {
+        const keyCard = cards[index];
+        if (keyCard) {
+          keyCard.classList.add("is-visible", "verdict-key");
+        }
+      });
+      verdictScrim.hidden = false;
+      verdictDialog.hidden = false;
+      document.body.classList.add("verdict-open");
+      verdictText.textContent = "";
+      verdictText.classList.remove("done");
+      caseSeal.classList.remove("is-stamped");
+      closeVerdictButton.focus();
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        verdictText.textContent = finalVerdict;
+        verdictText.classList.add("done");
+        caseSeal.classList.add("is-stamped");
+        return;
+      }
+
+      let character = 0;
+      typewriterTimer = window.setInterval(() => {
+        verdictText.textContent += finalVerdict[character];
+        character += 1;
+        if (character >= finalVerdict.length) {
+          window.clearInterval(typewriterTimer);
+          verdictText.classList.add("done");
+          caseSeal.classList.add("is-stamped");
+        }
+      }, 32);
+    });
+
+    closeVerdictButton.addEventListener("click", closeVerdict);
+    verdictScrim.addEventListener("click", closeVerdict);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !verdictDialog.hidden) closeVerdict();
+    });
+  </script>
+</body>
+</html>

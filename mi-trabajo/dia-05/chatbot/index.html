@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101a29">
+<title>Altamar | Asistente interno</title>
+<style>
+:root{color-scheme:dark;--night:#0b1320;--navy:#101d2d;--gold:#d9b56d;--goldlight:#f2d99e;--cream:#f6f0e4;--muted:#c5cbd2;--line:rgba(217,181,109,.36)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--cream);background:radial-gradient(ellipse at 12% 22%,rgba(83,103,125,.2),transparent 36%),radial-gradient(ellipse at 85% 40%,rgba(125,84,35,.15),transparent 32%),var(--night);font-family:Georgia,"Times New Roman",serif;line-height:1.55}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:15px clamp(18px,5vw,72px);background:rgba(9,16,27,.94);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:13px;color:var(--cream);text-decoration:none}.brand-mark{color:var(--goldlight);font-size:31px;line-height:1}.brand-title{font:600 15px/1.2 Arial,sans-serif;letter-spacing:.2em}.brand-sub{display:block;margin-top:5px;color:#c9c5bd;font:10px Arial,sans-serif;letter-spacing:.15em}
+main{max-width:1000px;margin:auto;padding:clamp(38px,8vw,92px) 20px}.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:.24em;font:11px Arial,sans-serif}.layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,6vw,72px);align-items:start}h1{font-size:clamp(35px,5vw,58px);line-height:1.08;margin:16px 0}.intro{color:#d9dce1;font:16px/1.8 Arial,sans-serif}.note{margin-top:28px;padding:18px;border-left:2px solid var(--gold);background:rgba(255,255,255,.035);color:#e6dfd2}.note strong{color:var(--goldlight)}
+.chat{border:1px solid var(--line);background:#111c2a;box-shadow:0 18px 40px rgba(0,0,0,.24)}.chat-head{padding:20px 22px;border-bottom:1px solid var(--line)}.chat-head h2{margin:0 0 4px;color:var(--goldlight);font-size:23px;font-weight:500}.chat-head p{margin:0;color:var(--muted);font:13px/1.7 Arial,sans-serif}.messages{display:grid;gap:12px;min-height:260px;max-height:55vh;overflow:auto;padding:20px}.message{max-width:95%;margin:0;padding:12px 14px;background:rgba(255,255,255,.06);font:14px/1.65 Arial,sans-serif;white-space:pre-wrap;overflow-wrap:anywhere}.message.user{justify-self:end;border:1px solid var(--line)}.message.bot{border-left:2px solid var(--gold)}.form{display:flex;gap:10px;align-items:flex-end;padding:16px 20px;border-top:1px solid var(--line)}textarea{flex:1;min-height:48px;max-height:140px;padding:12px;color:var(--cream);background:var(--night);border:1px solid var(--line);font:14px/1.5 Arial,sans-serif;resize:vertical}textarea:focus{outline:2px solid var(--gold)}button{flex:0 0 auto;border:1px solid var(--gold);border-radius:999px;padding:11px 18px;color:var(--goldlight);background:transparent;cursor:pointer;font:13px Arial,sans-serif}button:hover,button:focus-visible{background:var(--gold);color:var(--night)}button:disabled{opacity:.6;cursor:wait}.status{padding:0 20px 14px;color:var(--muted);font:12px Arial,sans-serif}.footer{padding:22px;text-align:center;color:#929ba6;border-top:1px solid rgba(217,181,109,.2);font:11px Arial,sans-serif;letter-spacing:.06em}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.messages{min-height:210px}.form{padding:12px}.topbar{padding:14px 18px}}
+@media(max-width:480px){.form{align-items:stretch;flex-direction:column}.form button{align-self:flex-end}}
+</style>
+</head>
+<body>
+<header class="topbar">
+<a class="brand" href="/" aria-label="Inicio de Altamar"><span class="brand-mark" aria-hidden="true">▤</span><span><span class="brand-title">ALTAMAR</span><span class="brand-sub">ASISTENTE INTERNO</span></span></a>
+<span class="eyebrow">Grupo Altamar</span>
+</header>
+<main>
+<div class="layout">
+<section>
+<div class="eyebrow">Información para el equipo</div>
+<h1>Hola.<br>¿En qué te ayudo?</h1>
+<p class="intro">Soy el asistente interno de Grupo Altamar. Puedo buscar respuestas en los documentos disponibles para el equipo.</p>
+<div class="note"><strong>Pregunta con tus palabras.</strong><br>Si no encuentro información relacionada en los documentos, te lo diré.</div>
+</section>
+<section class="chat" aria-label="Chat interno">
+<div class="chat-head"><h2>Conversación</h2><p>Escribe una pregunta sobre la información de la empresa.</p></div>
+<div class="messages" id="messages" role="log" aria-live="polite"><p class="message bot">Hola, soy el asistente interno de Altamar. ¿Qué te gustaría consultar?</p></div>
+<form class="form" id="chatForm"><textarea id="question" name="pregunta" maxlength="500" rows="2" placeholder="Escribe tu pregunta" required aria-label="Pregunta para el asistente"></textarea><button id="send" type="submit">Enviar</button></form>
+<div class="status" id="status" role="status"></div>
+</section>
+</div>
+</main>
+<footer class="footer">GRUPO ALTAMAR · ASISTENTE INTERNO</footer>
+<script>
+const form=document.getElementById('chatForm');
+const question=document.getElementById('question');
+const send=document.getElementById('send');
+const messages=document.getElementById('messages');
+const status=document.getElementById('status');
+const history=[];
+
+function addMessage(role,text){
+  const message=document.createElement('p');
+  message.className='message '+role;
+  message.textContent=text;
+  messages.append(message);
+  messages.scrollTop=messages.scrollHeight;
+}
+
+form.addEventListener('submit',async function(event){
+  event.preventDefault();
+  const text=question.value.trim();
+  if(!text){return;}
+  addMessage('user',text);
+  question.value='';
+  send.disabled=true;
+  send.textContent='Buscando…';
+  status.textContent='';
+  try{
+    const response=await fetch('/api/preguntar',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({pregunta:text,historial:history.slice(-10)})
+    });
+    if(!response.ok){throw new Error('POST /api/preguntar respondió '+response.status);}
+    const data=await response.json();
+    addMessage('bot',data.respuesta);
+    if(data.modo==='sin-llave'){status.textContent='Modo demostración: esta respuesta no usa IA.';}
+    history.push({role:'user',content:text},{role:'assistant',content:data.respuesta});
+    history.splice(0,Math.max(0,history.length-10));
+  }catch(error){
+    console.error('No se pudo conectar con el chatbot.',error);
+    addMessage('bot','No pude conectar con el chatbot. Verifica que siga activo en http://localhost:8001.');
+  }finally{
+    send.disabled=false;
+    send.textContent='Enviar';
+    question.focus();
+  }
+});
+</script>
+</body>
+</html>

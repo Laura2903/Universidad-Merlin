@@ -1,0 +1,14 @@
+.env
+.env.*
+**/.env
+**/.env.*
+
+entrevistas/
+**/entrevistas/
+
+ficha.csv
+**/ficha.csv
+
+museo/.venv/
+**/__pycache__/
+*.py[cod]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "inv-1",
+    "autor": "Compañera de Planeación de Suministro",
+    "invento": "Solución para detectar disminuciones de existencias y anticipar faltantes",
+    "problema": "La planificación de compras requiere hasta seis meses de anticipación; detectar tarde una disminución de existencias deja menos margen para evitar faltantes.",
+    "sin_el": "La disminución de existencias podría detectarse tarde y habría menos margen para anticipar compras y evitar faltantes.",
+    "quien_lo_usa": "Planeación de Suministro",
+    "valor_estimado": "desconocido"
+  },
+  {
+    "id": "inv-2",
+    "autor": "Analista de Cuentas por Pagar",
+    "invento": "Solución para validar cuentas de gastos y facturas, detectar inconsistencias y reducir errores",
+    "problema": "Validar que las facturas coincidan con los gastos, detectar inconsistencias y reducir errores en la revisión de comprobantes.",
+    "sin_el": "La validación sería más manual, con mayor riesgo de errores e inconsistencias y de que la gerencia rechazara la revisión.",
+    "quien_lo_usa": "Analista de Cuentas por Pagar",
+    "valor_estimado": "desconocido"
+  }
+]
